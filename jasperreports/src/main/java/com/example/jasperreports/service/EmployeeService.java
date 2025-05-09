@@ -54,4 +54,17 @@ public class EmployeeService {
         return JasperExportManager.exportReportToPdf(jasperPrint);
 
     }
+
+        public static byte[] generateIncidentReport() throws Exception {
+
+            InputStream reportStream = EmployeeService.class.getResourceAsStream("/reports/incident_report.jrxml");
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+            Map<String, Object> parameters = new HashMap<>();
+            JRDataSource dataSource = new JREmptyDataSource();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            return JasperExportManager.exportReportToPdf(jasperPrint);
+        }
+
+
 }

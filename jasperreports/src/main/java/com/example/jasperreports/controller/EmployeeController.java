@@ -52,4 +52,20 @@ public class EmployeeController {
         return new ResponseEntity<>(pdf,headers, HttpStatus.OK);
     }
 
+    @GetMapping("/incident")
+    public ResponseEntity<byte[]> generateIncidentReport() {
+        try {
+            byte[] pdfBytes = EmployeeService. generateIncidentReport();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("filename", "incident_report.pdf");
+
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
